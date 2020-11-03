@@ -2,6 +2,10 @@
 moc*
 *.pro.user
 *.qbs.user
+*.autosave
+*.qmake.*
+Makefile
+Chess
 
 # Prerequisites
 *.d
