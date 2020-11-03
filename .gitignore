@@ -1,3 +1,8 @@
+# QT
+moc*
+*.pro.user
+*.qbs.user
+
 # Prerequisites
 *.d
 
