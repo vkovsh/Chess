@@ -2,7 +2,8 @@
 
 using namespace Chess;
 
-ChessCtrl::ChessCtrl()
+ChessCtrl::ChessCtrl():
+    _chessBoard(NULL)
 {
 
 }

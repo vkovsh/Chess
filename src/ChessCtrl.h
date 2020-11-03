@@ -29,7 +29,6 @@ namespace Chess
         void setBoard(ChessBoard *board);
 
     private:
-        //null by default
-        QPointer<ChessBoard>    _chessBoard;
+        ChessBoard* _chessBoard;
     };
 }
