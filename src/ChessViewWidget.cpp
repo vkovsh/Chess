@@ -20,7 +20,7 @@ QSize ChessViewWidget::sizeHint() const
 
     // 'M' is the widest letter
     int rankSize = fontMetrics().horizontalAdvance('M') + 4;
-    int columnSize = fontMetrics().height() + 4;
+    int columnSize = fontMetrics().height() + 8;
     return boardSize + QSize(rankSize, columnSize);
 }
 
@@ -74,7 +74,7 @@ void ChessViewWidget::drawRow(QPainter *painter, int row)
     QRect r = getFieldRect(row, 0);
     QRect rankRect = QRect(0, r.top(), r.left(), r.height()).adjusted(2, 0, -2, 0);
     QString rankText = QString::number(row + 1);
-    QFont f;
+    QFont f("Helvetica", 14);
     f.setBold(true);
     painter->setFont(f);
     painter->drawText(rankRect, Qt::AlignVCenter | Qt::AlignRight, rankText);
@@ -84,7 +84,7 @@ void ChessViewWidget::drawColumn(QPainter *painter, int column)
 {
     QRect r = getFieldRect(0, column - 1);
     QRect columnRect = QRect(r.left(), r.bottom(), r.width(), height() - r.bottom()).adjusted(0, 2, 0, -2);
-    QFont f;
+    QFont f("Helvetica", 14);
     f.setBold(true);
     painter->setFont(f);
     painter->drawText(columnRect, Qt::AlignHCenter | Qt::AlignTop, QChar('a' + column - 1));
@@ -223,7 +223,8 @@ void ChessViewWidget::removeHighlight(ChessViewWidget::Highlight *hl)
 
 void ChessViewWidget::drawHighlights(QPainter *painter)
 {
-    for(int idx = 0; idx < highlightCount(); ++idx) {
+    for(int idx = 0; idx < highlightCount(); ++idx)
+    {
         Highlight *hl = highlight(idx);
         if(hl->type() == FieldHighlight::Type) {
             FieldHighlight *fhl = static_cast<FieldHighlight*>(hl);

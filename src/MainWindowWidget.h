@@ -1,18 +1,22 @@
 #pragma once
 
-#include <QWidget>
+#include <QMainWindow>
+#include "ui_MainWindow.h"
 
 #include "ChessViewWidget.h"
 #include "ChessCtrl.h"
 
 namespace Chess
 {
-    class MainWindowWidget : public QWidget
+    class MainWindowWidget : public QMainWindow
     {
         Q_OBJECT
 
     public:
         MainWindowWidget(QWidget* parent = NULL);
+
+    protected:
+        Ui::MainWindow* ui;
 
     private slots:
         void viewClicked(const QPoint &field);
