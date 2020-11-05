@@ -6,6 +6,9 @@ moc*
 *.qmake.*
 Makefile
 Chess
+chess
+ui*
+qrc*
 
 # Prerequisites
 *.d
