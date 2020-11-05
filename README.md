@@ -1,5 +1,7 @@
 # Chess
 
+qmake ../src/Chess.pro && make -j4 && make clean && rm Makefile && ./chess
+
 | Piece Name | White | Black |
 | --- | --- | --- |
 | King | K | k |

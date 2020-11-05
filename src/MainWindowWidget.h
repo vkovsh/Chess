@@ -4,7 +4,7 @@
 #include "ui_MainWindow.h"
 
 #include "ChessViewWidget.h"
-#include "ChessCtrl.h"
+#include "AbstractChessCtrl.h"
 
 namespace Chess
 {
@@ -24,7 +24,7 @@ namespace Chess
     private:
         QWidget*    _parent;
         ChessViewWidget*  _view;
-        ChessCtrl* _ctrl;
+        AbstractChessCtrl* _ctrl;
         QPoint  _clickPoint;
         ChessViewWidget::FieldHighlight* _selectedField;
     };
