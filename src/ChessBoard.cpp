@@ -1,9 +1,17 @@
 #include "ChessBoard.h"
 
+#include <QDebug>
+
 using namespace Chess;
 
-ChessBoard::ChessBoard(int rows, int columns, QObject* ctrl):
-    _rows(rows),
+ChessBoard::ChessBoard(QObject* ctrl):
+    ChessBoard::ChessBoard(RANKS_TOTAL, COLUMNS_TOTAL, ctrl)
+{
+
+}
+
+ChessBoard::ChessBoard(Rank ranks, Column columns, QObject* ctrl):
+    _ranks(ranks),
     _columns(columns),
     _ctrl(ctrl)
 {
@@ -15,15 +23,14 @@ ChessBoard::~ChessBoard()
 
 }
 
-void ChessBoard::setFen(const QByteArray &fen)
+void ChessBoard::setFen(const QByteArray& fen)
 {
     int index = 0;
     int skip = 0;
-    const int columnCount = getColumns();
     PieceMark ch;
-    for(int row = getRows(); row > 0; --row)
+    for (int rank = RANK_EIGHT; rank >= RANK_ONE; --rank)
     {
-        for (int column = 1; column <= columnCount; ++column)
+        for (int column = COLUMN_A; column <= COLUMN_H; ++column)
         {
             if (skip > 0)
             {
@@ -40,7 +47,8 @@ void ChessBoard::setFen(const QByteArray &fen)
                     skip--;
                 }
             }
-            setDataInternal(row, column, ch);
+            setDataInternal(Position(static_cast<Rank>(rank), static_cast<Column>(column)),
+                            ch);
         }
         char next = fen.at(index++);
         if(next != '/' && next != ' ')
@@ -52,25 +60,22 @@ void ChessBoard::setFen(const QByteArray &fen)
     emit boardReset();
 }
 
-void ChessBoard::movePiece(int fromRow,
-               int fromColumn,
-               int toRow,
-               int toColumn)
+void ChessBoard::movePiece(Position fromPos, Position toPos)
 {
-    setData(toRow, toColumn, getData(fromRow, fromColumn));
-    setData(fromRow, fromColumn, EMPTY_FIELD_MARK);
+    setData(toPos, getData(fromPos));
+    setData(fromPos, EMPTY_FIELD_MARK);
 }
 
-ChessBoard::PieceMark   ChessBoard::getData(int row, int column)
+ChessBoard::PieceMark   ChessBoard::getData(Position pos)
 {
-    int position = (row - 1) * getColumns() + (column - 1);
+    int position = pos.rank * COLUMNS_TOTAL + pos.column;
     return _boardData.at(position);
 }
 
-bool ChessBoard::setDataInternal(int row, int column, ChessBoard::PieceMark value)
+bool ChessBoard::setDataInternal(ChessBoard::Position position, ChessBoard::PieceMark value)
 {
-    int index = (row - 1) * getColumns() + (column - 1);
-    if(_boardData .at(index) == value)
+    int index = position.rank * COLUMNS_TOTAL + position.column;
+    if(_boardData.at(index) == value)
     {
         return false;
     }
@@ -78,50 +83,50 @@ bool ChessBoard::setDataInternal(int row, int column, ChessBoard::PieceMark valu
     return true;
 }
 
-void    ChessBoard::setData(int row, int column, ChessBoard::PieceMark value)
+void    ChessBoard::setData(Position position, ChessBoard::PieceMark value)
 {
-    if (true == setDataInternal(row, column, value))
+    if (true == setDataInternal(position, value))
     {
-        emit dataChanged(row, column);
+        emit dataChanged(position);
     }
 }
 
 void ChessBoard::initBoard()
 {
-    _boardData.fill(EMPTY_FIELD_MARK, getRows() * getColumns());
+    _boardData.fill(EMPTY_FIELD_MARK, ranksCount() * columnsCount());
     emit boardReset();
 }
 
-int ChessBoard::getRows() const
+ChessBoard::Rank ChessBoard::ranksCount() const
 {
-    return _rows;
+    return _ranks;
 }
 
-int ChessBoard::getColumns() const
+ChessBoard::Column ChessBoard::columnsCount() const
 {
     return _columns;
 }
 
-void ChessBoard::setRows(int newRows)
+void ChessBoard::setRanks(ChessBoard::Rank newRanks)
 {
-    if(getRows() == newRows)
+    if (ranksCount() == newRanks)
     {
         return;
     }
-    _rows = newRows;
+
+    _ranks = newRanks;
     initBoard();
-    emit rowsChanged(_rows);
+    emit ranksChanged(_ranks);
 }
 
-void ChessBoard::setColumns(int newColumns)
+void ChessBoard::setColumns(ChessBoard::Column newColumns)
 {
-    if(getColumns() == newColumns)
+    if (columnsCount() == newColumns)
     {
         return;
     }
+
     _columns = newColumns;
     initBoard();
     emit columnsChanged(_columns);
 }
-
-

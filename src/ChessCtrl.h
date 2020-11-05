@@ -12,7 +12,7 @@ namespace Chess
         Q_OBJECT
 
     public:
-        ChessCtrl();
+        ChessCtrl(QObject* parent);
         ~ChessCtrl();
 
     public:
@@ -29,6 +29,7 @@ namespace Chess
         void setBoard(ChessBoard *board);
 
     private:
+        QObject* _parent;
         ChessBoard* _chessBoard;
     };
 }

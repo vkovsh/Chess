@@ -1,8 +1,17 @@
 #include <QApplication>
 
-int main(const int argc, const char** argv)
+#include "MainWindowWidget.h"
+
+using namespace Chess;
+
+int main(int argc, char** argv)
 {
-    Q_UNUSED(argc);
-    Q_UNUSED(argv);
-    return 0;
+    QApplication app(argc, argv);
+
+    QApplication::setApplicationName("CountriesWidget");
+    QApplication::setOrganizationName("ozzylogik");
+
+    MainWindowWidget mainWidget;
+    mainWidget.show();
+    return app.exec();
 }

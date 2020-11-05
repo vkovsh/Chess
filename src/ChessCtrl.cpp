@@ -2,7 +2,8 @@
 
 using namespace Chess;
 
-ChessCtrl::ChessCtrl():
+ChessCtrl::ChessCtrl(QObject* parent):
+    _parent(parent),
     _chessBoard(NULL)
 {
 
@@ -21,17 +22,13 @@ ChessBoard* ChessCtrl::getBoard() const
 void ChessCtrl::newGame()
 {
     setupBoard();
+    getBoard()->setFen(
+                "rnbqkbnr/pppppppp/8/8/8/8/PPPPPPPP/RNBQKBNR w KQkq - 0 1");
 }
-
-//signal
-//void ChessCtrl::boardChanged(ChessBoard*)
-//{
-
-//}
 
 void ChessCtrl::setupBoard()
 {
-    ChessBoard* newBoard = new ChessBoard(8, 8, this);
+    ChessBoard* newBoard = new ChessBoard(this);
     setBoard(newBoard);
 }
 
