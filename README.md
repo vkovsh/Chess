@@ -14,10 +14,9 @@ White always moves first, and players alternate turns. Players can only move one
 Players take pieces when they encounter an opponent in their movement path. Only pawns take differently than they move (explained later).
 Players cannot take or move through their own pieces.
 
-__**Step 2: Pawn Movement**__
+**Step 2: Pawn Movement**
 <img src="https://github.com/vkovsh/Chess/blob/main/icons/white_pawn.png" width="50"/>
 
-**Step 2: Pawn Movement**
 Pawns only move forward. On the first move a pawn can move one or two spaces, every subsequent move can only be one space.
 Pawns move diagonally to take opponents.
 
