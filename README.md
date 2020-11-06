@@ -16,6 +16,7 @@ Players cannot take or move through their own pieces.
 
 _**Step 2: Pawn Movement**_
 <img src="https://github.com/vkovsh/Chess/blob/main/icons/white_pawn.png" width="50"/>
+<img src="https://github.com/vkovsh/Chess/blob/main/icons/black_pawn.png" width="50"/>
 
 Pawns only move forward. On the first move a pawn can move one or two spaces, every subsequent move can only be one space.
 Pawns move diagonally to take opponents.
