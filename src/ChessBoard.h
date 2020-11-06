@@ -65,6 +65,41 @@ namespace Chess
             Position(Rank r, Column c): rank(r), column(c){}
             ~Position(){}
 
+            void incColumn()
+            {
+                if (column < COLUMN_H)
+                {
+                    column = static_cast<Column>(column + 1);
+                }
+            };
+
+            void incRank()
+            {
+                if (rank < RANK_EIGHT)
+                {
+                    rank = static_cast<Rank>(rank + 1);
+                }
+            };
+
+            void decColumn()
+            {
+                if (column > COLUMN_A)
+                {
+                    column = static_cast<Column>(column - 1);
+                }
+            };
+
+            void decRank()
+            {
+                if (rank > RANK_ONE)
+                {
+                    rank = static_cast<Rank>(rank - 1);
+                }
+            };
+
+            bool operator==(const Position& rhs) const
+            { return rank == rhs.rank && column == rhs.column; }
+
         public:
             Rank rank;
             Column column;

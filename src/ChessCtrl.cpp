@@ -8,7 +8,13 @@ ChessCtrl::ChessCtrl(QObject *parent):
            ChessBoard::Position(ChessBoard::RANK_UNDEFINED,
                                 ChessBoard::COLUMN_UNDEFINED),
            ChessBoard::Position(ChessBoard::RANK_UNDEFINED,
-                                ChessBoard::COLUMN_UNDEFINED))
+                                ChessBoard::COLUMN_UNDEFINED)),
+    _whiteKingMoved(false),
+    _whiteLeftRookMoved(false),
+    _whiteRightRookMoved(false),
+    _blackKingMoved(false),
+    _blackLeftRookMoved(false),
+    _blackRightRookMoved(false)
 {
 }
 
@@ -70,26 +76,13 @@ bool ChessCtrl::move(const ChessBoard::Position& from,
         }
     }
 
-    _piece.pieceMark = source;
-    _piece.positionFrom = from;
-    _piece.positionTo = to;
+    _pieceMove = PieceMove(source, from, to);
     if (pieceCanMove() == false)
     {
         return false;
     }
-
-    //        // both can only move one column right or left
-//        if(colTo != colFrom + 1 && colTo != colFrom - 1) return false;
-
-//        // is the destination field black?
-//        if((colTo + rankTo) % 2) return false;
-
-//        // is the destination field empty?
-//        char destination = board()->data(colTo, rankTo);
-//        if(destination != ' ') return false;
-
-//        // is white advancing?
-//        if(currentPlayer() == Player1 && rankTo <= rankFrom) return false;
+    //move piece
+    getBoard()->movePiece(from, to);
 
 //        board()->movePiece(colFrom, rankFrom, colTo, rankTo);
 //        // make the move
@@ -111,7 +104,7 @@ bool ChessCtrl::move(const ChessBoard::Position& from,
     //    return false;
 }
 
-bool ChessCtrl::isCheck() const
+bool ChessCtrl::isCheck(ChessBoard::Position position) const
 {
     return false;
 }
@@ -128,7 +121,7 @@ bool ChessCtrl::isStalemate() const
 
 bool ChessCtrl::pieceCanMove() const
 {
-    switch (_piece.pieceMark)
+    switch (_pieceMove.pieceMark)
     {
     case ChessBoard::WHITE_KING_MARK:
         return kingCanMove();
@@ -161,7 +154,48 @@ bool ChessCtrl::pieceCanMove() const
 
 bool ChessCtrl::kingCanMove() const
 {
-    return false;
+    //check is move legal
+    {
+        //normal king move
+        int diff = _pieceMove.positionFrom.rank -
+                _pieceMove.positionTo.rank +
+                _pieceMove.positionFrom.column -
+                _pieceMove.positionTo.column;
+        if (false == (diff == 0 || diff == 1 || diff == -1))
+        {
+            if (canCastling() == true)
+            {
+
+            }
+            return false;
+        }
+    }
+    //check on friendly fire
+    ChessBoard::PieceMark dest =
+            getBoard()->getData(_pieceMove.positionTo);
+    if (_pieceMove.pieceMark == ChessBoard::WHITE_KING_MARK)
+    {
+        if (dest == ChessBoard::WHITE_QUEEN_MARK ||
+            dest == ChessBoard::WHITE_ROOK_MARK ||
+            dest == ChessBoard::WHITE_BISHOP_MARK ||
+            dest == ChessBoard::WHITE_KNIGHT_MARK ||
+            dest == ChessBoard::WHITE_PAWN_MARK)
+        {
+            return false;
+        }
+    }
+    else
+    {
+        if (dest == ChessBoard::BLACK_QUEEN_MARK ||
+            dest == ChessBoard::BLACK_ROOK_MARK ||
+            dest == ChessBoard::BLACK_BISHOP_MARK ||
+            dest == ChessBoard::BLACK_KNIGHT_MARK ||
+            dest == ChessBoard::BLACK_PAWN_MARK)
+        {
+            return false;
+        }
+    }
+    return true;
 }
 
 bool ChessCtrl::queenCanMove() const
@@ -191,7 +225,138 @@ bool ChessCtrl::pawnCanMove() const
 
 bool ChessCtrl::canCastling() const
 {
+    //king is checked in current position and on potential castling path
+    if (false == isCheck(_pieceMove.positionFrom))
+    {
+        ChessBoard::Position checkPos = _pieceMove.positionFrom;
+        if (_pieceMove.positionTo.column < _pieceMove.positionFrom.column)
+        {
+            checkPos.decColumn();
+            if (isCheck(checkPos) == true)
+            {
+                return false;
+            }
+            checkPos.decColumn();
+            if (isCheck(checkPos) == true)
+            {
+                return false;
+            }
+        }
+        else
+        {
+            checkPos.incColumn();
+            if (isCheck(checkPos) == true)
+            {
+                return false;
+            }
+            checkPos.incColumn();
+            if (isCheck(checkPos) == true)
+            {
+                return false;
+            }
+        }
+    }
+
+    if (getCurrentPlayerID() == Player1)
+    {
+        if (_whiteKingMoved == true)
+        {
+            return false;
+        }
+        else
+        {
+            const ChessBoard::Position
+                    LEFT_ROOK_START_POS(ChessBoard::RANK_ONE, ChessBoard::COLUMN_A);
+            const ChessBoard::Position
+                    RIGHT_ROOK_START_POS(ChessBoard::RANK_ONE, ChessBoard::COLUMN_H);
+            const ChessBoard::Position
+                    LEFT_CASTLING_KING_POS(ChessBoard::RANK_ONE, ChessBoard::COLUMN_C);
+            const ChessBoard::Position
+                    RIGHT_CASTLING_KING_POS(ChessBoard::RANK_ONE, ChessBoard::COLUMN_G);
+            if (LEFT_CASTLING_KING_POS == _pieceMove.positionTo && _whiteLeftRookMoved == false)
+            {
+                //check space between king and rook
+                for (int c = _pieceMove.positionFrom.column - 1; c != ChessBoard::COLUMN_A; --c)
+                {
+                    ChessBoard::Position
+                            pos(ChessBoard::RANK_ONE, static_cast<ChessBoard::Column>(c));
+                    if (getBoard()->getData(pos) != ChessBoard::EMPTY_FIELD_MARK)
+                    {
+                        return false;
+                    }
+                }
+                return true;
+            }
+            if (RIGHT_CASTLING_KING_POS == _pieceMove.positionTo && _whiteRightRookMoved == false)
+            {
+                //check space between king and rook
+                for (int c = _pieceMove.positionFrom.column + 1; c != ChessBoard::COLUMN_H; ++c)
+                {
+                    ChessBoard::Position
+                            pos(ChessBoard::RANK_ONE, static_cast<ChessBoard::Column>(c));
+                    if (getBoard()->getData(pos) != ChessBoard::EMPTY_FIELD_MARK)
+                    {
+                        return false;
+                    }
+                }
+                return true;
+            }
+        }
+    }
+    else if (getCurrentPlayerID() == Player2)
+    {
+        if (_blackKingMoved == true)
+        {
+            return false;
+        }
+        else
+        {
+            const ChessBoard::Position
+                    LEFT_ROOK_START_POS(ChessBoard::RANK_EIGHT, ChessBoard::COLUMN_A);
+            const ChessBoard::Position
+                    RIGHT_ROOK_START_POS(ChessBoard::RANK_EIGHT, ChessBoard::COLUMN_H);
+            const ChessBoard::Position
+                    LEFT_CASTLING_KING_POS(ChessBoard::RANK_EIGHT, ChessBoard::COLUMN_C);
+            const ChessBoard::Position
+                    RIGHT_CASTLING_KING_POS(ChessBoard::RANK_EIGHT, ChessBoard::COLUMN_G);
+            if (LEFT_CASTLING_KING_POS == _pieceMove.positionTo && _blackLeftRookMoved == false)
+            {
+                //check space between king and rook
+                for (int c = _pieceMove.positionFrom.column - 1; c != ChessBoard::COLUMN_A; --c)
+                {
+                    ChessBoard::Position
+                            pos(ChessBoard::RANK_EIGHT, static_cast<ChessBoard::Column>(c));
+                    if (getBoard()->getData(pos) != ChessBoard::EMPTY_FIELD_MARK)
+                    {
+                        return false;
+                    }
+                }
+                return true;
+            }
+            if (RIGHT_CASTLING_KING_POS == _pieceMove.positionTo && _blackRightRookMoved == false)
+            {
+                //check space between king and rook
+                for (int c = _pieceMove.positionFrom.column + 1; c != ChessBoard::COLUMN_H; ++c)
+                {
+                    ChessBoard::Position
+                            pos(ChessBoard::RANK_EIGHT, static_cast<ChessBoard::Column>(c));
+                    if (getBoard()->getData(pos) != ChessBoard::EMPTY_FIELD_MARK)
+                    {
+                        return false;
+                    }
+                }
+                return true;
+            }
+        }
+    }
     return false;
+}
+
+void ChessCtrl::castling()
+{
+    ChessBoard::PieceMark rook = getBoard()->getData(_pieceMove.positionTo);
+//    getBoard()->setData(_pieceMove.positionFrom, rook);
+//    getBoard()-setData(_pieceMove.positionTo)
 }
 
 bool ChessCtrl::emptyByOffset(int x, int y) const
