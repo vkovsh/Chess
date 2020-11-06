@@ -1,7 +1,9 @@
 # Chess
 
-<a href="url"><img src="https://github.com/vkovsh/Chess/blob/main/chess_view.png" align="left" height="48" width="48" ></a>
-
+1) The board is setup as shown.
+<a href="url"><img src="https://github.com/vkovsh/Chess/blob/main/chess_view.png" align="left" height="200" width="200" ></a>
+<br/>
+2)
 qmake ../src/Chess.pro && make -j4 && make clean && rm Makefile && ./chess
 
 | Piece Name | White | Black |
