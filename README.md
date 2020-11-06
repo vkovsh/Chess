@@ -1,6 +1,6 @@
 # Chess
 
-**Step 1: Setup, Turns, and Taking Pieces**
+_**Step 1: Setup, Turns, and Taking Pieces**_
 
 **Setup:**
 The board is setup as shown. There should always be a white square at the closest right-hand side for both players.
@@ -14,7 +14,7 @@ White always moves first, and players alternate turns. Players can only move one
 Players take pieces when they encounter an opponent in their movement path. Only pawns take differently than they move (explained later).
 Players cannot take or move through their own pieces.
 
-**Step 2: Pawn Movement**
+_**Step 2: Pawn Movement**_
 <img src="https://github.com/vkovsh/Chess/blob/main/icons/white_pawn.png" width="50"/>
 
 Pawns only move forward. On the first move a pawn can move one or two spaces, every subsequent move can only be one space.
@@ -23,7 +23,7 @@ Pawns move diagonally to take opponents.
 **Pawn Promotion:**
 
 
-qmake ../src/Chess.pro && make -j4 && make clean && rm Makefile && ./chess
+_qmake ../src/Chess.pro && make -j4 && make clean && rm Makefile && ./chess_
 
 | Piece Name | White | Black |
 | --- | --- | --- |
