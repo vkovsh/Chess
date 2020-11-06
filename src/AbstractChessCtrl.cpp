@@ -5,7 +5,7 @@ using namespace Chess;
 AbstractChessCtrl::AbstractChessCtrl(QObject *parent):
     QObject(parent),
     _result(NoResult),
-    _currentPlayer(NoPlayer),
+    _currentPlayerID(NoPlayer),
     _chessBoard(NULL)
 {
 
@@ -43,15 +43,15 @@ void AbstractChessCtrl::setBoard(ChessBoard *chessBoard)
     emit boardChanged(_chessBoard);
 }
 
-void AbstractChessCtrl::setCurrentPlayer(Player value)
+void AbstractChessCtrl::setCurrentPlayer(PlayerID value)
 {
-    if (getCurrentPlayer() == value)
+    if (getCurrentPlayerID() == value)
     {
-        return;
+        return ;
     }
 
-    _currentPlayer = value;
-    emit currentPlayerChanged(_currentPlayer);
+    _currentPlayerID = value;
+    emit currentPlayerChanged(_currentPlayerID);
 }
 
 void AbstractChessCtrl::setResult(Result value)

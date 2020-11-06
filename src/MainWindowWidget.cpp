@@ -51,7 +51,6 @@ void MainWindowWidget::viewClicked(const QPoint &field)
         {
             _clickPoint = field;
             _selectedField = new ChessViewWidget::FieldHighlight(
-                        //c9a0dc
                         field.y(), field.x(), QColor(0xc9, 0xa0, 0xdc, 150));
             _view->addHighlight(_selectedField);
         }

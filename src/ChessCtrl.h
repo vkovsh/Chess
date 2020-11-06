@@ -8,18 +8,26 @@ namespace Chess
     {
         //types
     public:
-        struct Piece
+        struct PieceMove
         {
             ChessBoard::PieceMark   pieceMark;
-            ChessBoard::Position    position;
+            ChessBoard::Position    positionFrom;
+            ChessBoard::Position    positionTo;
 
-            explicit Piece(const ChessBoard::PieceMark m,
-                  const ChessBoard::Position p):
+            explicit PieceMove(const ChessBoard::PieceMark m,
+                  const ChessBoard::Position& from,
+                  const ChessBoard::Position& to):
                 pieceMark(m),
-                position(p)
+                positionFrom(from),
+                positionTo(to)
             {}
-            ~Piece()
+            ~PieceMove()
             {}
+        };
+
+        struct PlayerData
+        {
+
         };
 
         //constructors and destructors
@@ -34,10 +42,22 @@ namespace Chess
                   const ChessBoard::Position& to) override;
 
     protected:
+        //can  move
         bool pieceCanMove() const;
+        bool kingCanMove() const;
+        bool queenCanMove() const;
+        bool rookCanMove() const;
+        bool bishopCanMove() const;
+        bool knightCanMove() const;
+        bool pawnCanMove() const;
+        bool canCastling() const;
+
+        bool isCheck() const;
+        bool isCheckmate() const;
+        bool isStalemate() const;
         bool emptyByOffset(int x, int y) const;
 
     private:
-        Piece   _piece;
+        PieceMove   _pieceMove;
     };
 }

@@ -11,8 +11,8 @@ namespace Chess
     {
         Q_OBJECT
         Q_PROPERTY(Result result READ getResult)
-        Q_PROPERTY(Player currentPlayer
-                   READ getCurrentPlayer
+        Q_PROPERTY(PlayerID currentPlayerID
+                   READ getCurrentPlayerID
                    NOTIFY currentPlayerChanged)
 
         //types
@@ -26,13 +26,13 @@ namespace Chess
         };
         Q_ENUM(Result)
 
-        enum Player
+        enum PlayerID
         {
             NoPlayer = -1,
             Player1 = 0,
             Player2 = 2
         };
-        Q_ENUM(Player)
+        Q_ENUM(PlayerID)
 
         //constructors and destructors
     public:
@@ -43,7 +43,7 @@ namespace Chess
     public:
         ChessBoard* getBoard() const;
         inline Result getResult() const { return _result; }
-        inline Player getCurrentPlayer() const { return _currentPlayer; }
+        inline PlayerID getCurrentPlayerID() const { return _currentPlayerID; }
 
     public slots:
         virtual void newGame();
@@ -53,17 +53,17 @@ namespace Chess
     signals:
         void boardChanged(ChessBoard*);
         void gameOver(Result);
-        void currentPlayerChanged(Player);
+        void currentPlayerChanged(PlayerID);
 
     protected:
         virtual void setupBoard();
         void setBoard(ChessBoard *board);
         void setResult(Result);
-        void setCurrentPlayer(Player);
+        void setCurrentPlayer(PlayerID);
 
     private:
         Result  _result;
-        Player  _currentPlayer;
+        PlayerID  _currentPlayerID;
         ChessBoard* _chessBoard;
     };
 }
