@@ -14,9 +14,9 @@ White always moves first, and players alternate turns. Players can only move one
 Players take pieces when they encounter an opponent in their movement path. Only pawns take differently than they move (explained later).
 Players cannot take or move through their own pieces.
 
+_**Step 2: Pawn Movement**_
 <img src="https://github.com/vkovsh/Chess/blob/main/icons/white_pawn.png" width="50"/>
 <img src="https://github.com/vkovsh/Chess/blob/main/icons/black_pawn.png" width="50"/>
-_**Step 2: Pawn Movement**_
 
 Pawns only move forward. On the first move a pawn can move one or two spaces, every subsequent move can only be one space.
 Pawns move diagonally to take opponents.
@@ -25,34 +25,34 @@ Pawns move diagonally to take opponents.
 If a pawn reaches the opposite side of the board, it is promoted to a higher piece (except king).
 There is no limit to how many pawns can be promoted.
 
+_**Step 3: Rook**_
 <img src="https://github.com/vkovsh/Chess/blob/main/icons/white_rook.png" width="50"/>
 <img src="https://github.com/vkovsh/Chess/blob/main/icons/black_rook.png" width="50"/>
-_**Step 3: Rook**_
 
 Rooks move in a continuous line forwards, backwards and side-to-side.
 
+_**Step 4: Knight**_
 <img src="https://github.com/vkovsh/Chess/blob/main/icons/white_knight.png" width="50"/>
 <img src="https://github.com/vkovsh/Chess/blob/main/icons/black_knight.png" width="50"/>
-_**Step 4: Knight**_
 
 Knights are the only pieces that "jump" off the board. Unlike other pieces they are not blocked if there are pieces between them and their destination square.
 To make it easier to remember how a knight moves think of an L. Two spaces in a direction forward, backward or side-to-side, and one space at a right turn.
 
+_**Step 5: Bishop**_
 <img src="https://github.com/vkovsh/Chess/blob/main/icons/white_bishop.png" width="50"/>
 <img src="https://github.com/vkovsh/Chess/blob/main/icons/black_bishop.png" width="50"/>
-_**Step 5: Bishop**_
 
 Bishops move in continuous diagonal lines in any direction.
 
+_**Step 6: Queen**_
 <img src="https://github.com/vkovsh/Chess/blob/main/icons/white_queen.png" width="50"/>
 <img src="https://github.com/vkovsh/Chess/blob/main/icons/black_queen.png" width="50"/>
-_**Step 6: Queen**_
 
 The queen moves in continuous diagonal and straight lines. Forward, backward and side-to-side.
 
+_**Step 7: King**_
 <img src="https://github.com/vkovsh/Chess/blob/main/icons/white_king.png" width="50"/>
 <img src="https://github.com/vkovsh/Chess/blob/main/icons/black_king.png" width="50"/>
-_**Step 7: King**_
 
 The king can move in any direction, one square at a time. A king cannot move to a square that is under attack by the opponent.
 
