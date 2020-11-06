@@ -1,6 +1,6 @@
 # Chess
 
-__**Step 1: Setup, Turns, and Taking Pieces**__
+**Step 1: Setup, Turns, and Taking Pieces**
 
 **Setup:**
 The board is setup as shown. There should always be a white square at the closest right-hand side for both players.
@@ -16,6 +16,8 @@ Players cannot take or move through their own pieces.
 
 __**Step 2: Pawn Movement**__
 <img src="https://github.com/vkovsh/Chess/blob/main/icons/white_pawn.png" width="50"/>
+
+**Step 2: Pawn Movement**
 Pawns only move forward. On the first move a pawn can move one or two spaces, every subsequent move can only be one space.
 Pawns move diagonally to take opponents.
 
