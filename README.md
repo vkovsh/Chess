@@ -1,6 +1,6 @@
 # Chess
 
-![Boars setup](https://github.com/vkovsh/Chess/blob/main/chess_view.png?raw=true | width=100)
+<a href="url"><img src="https://github.com/vkovsh/Chess/blob/main/chess_view.png" align="left" height="48" width="48" ></a>
 
 qmake ../src/Chess.pro && make -j4 && make clean && rm Makefile && ./chess
 
