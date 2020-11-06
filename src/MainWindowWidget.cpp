@@ -30,7 +30,7 @@ MainWindowWidget::MainWindowWidget(QWidget *parent) :
         _view->setPiece(ChessBoard::PieceMark('b'), QIcon(":/icons/black_bishop.png")); // bishop
     }
 
-    _ctrl = new AbstractChessCtrl(this);
+    _ctrl = new ChessCtrl(this);
     _ctrl->newGame();
     _view->setChessBoard(_ctrl->getBoard());
     setCentralWidget(_view);

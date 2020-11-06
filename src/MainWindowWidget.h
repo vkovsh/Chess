@@ -4,7 +4,7 @@
 #include "ui_MainWindow.h"
 
 #include "ChessViewWidget.h"
-#include "AbstractChessCtrl.h"
+#include "ChessCtrl.h"
 
 namespace Chess
 {

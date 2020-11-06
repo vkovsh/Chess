@@ -1,5 +1,7 @@
 # Chess
 
+![alt text](https://github.com/vkovsh/Chess/blob/main/chess_view.png?raw=true)
+
 qmake ../src/Chess.pro && make -j4 && make clean && rm Makefile && ./chess
 
 | Piece Name | White | Black |

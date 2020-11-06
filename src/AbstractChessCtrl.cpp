@@ -13,7 +13,6 @@ AbstractChessCtrl::AbstractChessCtrl(QObject *parent):
 
 AbstractChessCtrl::~AbstractChessCtrl()
 {
-
 }
 
 ChessBoard* AbstractChessCtrl::getBoard() const
@@ -53,6 +52,24 @@ void AbstractChessCtrl::setCurrentPlayer(Player value)
 
     _currentPlayer = value;
     emit currentPlayerChanged(_currentPlayer);
+}
+
+void AbstractChessCtrl::setResult(Result value)
+{
+    if (getResult() == value)
+    {
+        return;
+    }
+
+    if (getResult() == NoResult)
+    {
+        _result = value;
+        emit gameOver(_result);
+    }
+    else
+    {
+        _result = value;
+    }
 }
 
 bool AbstractChessCtrl::move(const ChessBoard::Position& from,

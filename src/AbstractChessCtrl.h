@@ -36,8 +36,8 @@ namespace Chess
 
         //constructors and destructors
     public:
-        explicit AbstractChessCtrl(QObject* parent = NULL);
-        ~AbstractChessCtrl();
+        AbstractChessCtrl(QObject* parent = NULL);
+        virtual ~AbstractChessCtrl() = 0;
 
         //getters and setters
     public:

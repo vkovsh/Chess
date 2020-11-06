@@ -33,6 +33,7 @@ namespace Chess
 
         enum Rank
         {
+            RANK_UNDEFINED = -1,
             RANK_ONE = 0,
             RANK_TWO = 1,
             RANK_THREE = 2,
@@ -46,6 +47,7 @@ namespace Chess
 
         enum Column
         {
+            COLUMN_UNDEFINED = -1,
             COLUMN_A = 0,
             COLUMN_B = 1,
             COLUMN_C = 2,

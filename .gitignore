@@ -9,6 +9,7 @@ Chess
 chess
 ui*
 qrc*
+*.debug
 
 # Prerequisites
 *.d
