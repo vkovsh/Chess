@@ -64,7 +64,8 @@ void MainWindowWidget::viewClicked(const QPoint &field)
             ChessBoard::Position toPos(static_cast<ChessBoard::Rank>(field.y()),
                                          static_cast<ChessBoard::Column>(field.x()));
 
-            _view->getChessBoard()->movePiece(fromPos, toPos);
+            bool moveSuccess = _ctrl->move(fromPos, toPos);
+//            _view->getChessBoard()->movePiece(fromPos, toPos);
         }
         _clickPoint = QPoint(-1, -1);
         _view->removeHighlight(_selectedField);

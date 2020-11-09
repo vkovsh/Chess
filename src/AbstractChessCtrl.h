@@ -54,6 +54,9 @@ namespace Chess
         void boardChanged(ChessBoard*);
         void gameOver(Result);
         void currentPlayerChanged(PlayerID);
+        void promotePawn();
+        void checkmated();
+        void stalemate();
 
     protected:
         virtual void setupBoard();

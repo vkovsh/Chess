@@ -62,7 +62,8 @@ void ChessBoard::setFen(const QByteArray& fen)
 
 void ChessBoard::movePiece(Position fromPos, Position toPos)
 {
-    setData(toPos, getData(fromPos));
+    PieceMark piece  = getData(fromPos);
+    setData(toPos, piece);
     setData(fromPos, EMPTY_FIELD_MARK);
 }
 

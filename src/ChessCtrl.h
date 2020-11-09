@@ -41,9 +41,6 @@ namespace Chess
         bool move(const ChessBoard::Position& from,
                   const ChessBoard::Position& to) override;
 
-    signals:
-        void    promotePawn();
-
     protected:
         //can  move
         bool pieceCanMove() const;
@@ -57,10 +54,14 @@ namespace Chess
         bool canCastling() const;
         void castling();
 
+        bool pathIsClear(const ChessBoard::Position& from,
+                         const ChessBoard::Position& to) const;
+
+        bool friendlyFire(const ChessBoard::Position& to) const;
+
         bool isCheck(ChessBoard::Position position) const;
         bool isCheckmate() const;
         bool isStalemate() const;
-        bool emptyByOffset(int x, int y) const;
 
     private:
         PieceMove   _pieceMove;

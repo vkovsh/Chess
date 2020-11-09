@@ -62,7 +62,7 @@ namespace Chess
         struct Position
         {
         public:
-            Position(Rank r, Column c): rank(r), column(c){}
+            Position(Rank r = RANK_UNDEFINED, Column c = COLUMN_UNDEFINED): rank(r), column(c){}
             ~Position(){}
 
             void incColumn()
